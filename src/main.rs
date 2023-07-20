@@ -11,10 +11,19 @@ struct GameState{
     colour : Color
 }
 
+impl GameState{
+    fn new() -> Self {
+        Self{
+            game_tick : 0,
+            colour : Color::RGB(0, 255, 255)
+        }
+    }
+}
+
 fn main() -> Result<(), String> {
     let (mut event_pump, mut canvas) = init()?;
 
-    let mut game_state = init_gamestate();
+    let mut game_state = GameState::new();
 
     loop {
         let result = process_input(&mut event_pump);
@@ -27,13 +36,6 @@ fn main() -> Result<(), String> {
         ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
     }
     Ok(())
-}
-
-fn init_gamestate() -> GameState {
-    GameState{
-        game_tick : 0,
-        colour : Color::RGB(0, 255, 255)
-    }
 }
 
 fn init() -> Result<(EventPump, Canvas<Window>), String> {
